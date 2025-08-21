@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  d-dev-react:
+    image: node:22
+    container_name: d-dev-react
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: npm start
+    ports:
+      - "${REACT_PORT:-3000}:3000"
+    networks:
+      - dev-net
+
+  d-tomcat:
+    image: tomcat:9.0-jdk8
+    container_name: d-tomcat
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    volumes:
+      - ./backend:/usr/local/tomcat/webapps
+    ports:
+      - "${TOMCAT_PORT:-8080}:8080"
+    depends_on:
+      - d-db
+    networks:
+      - dev-net
+
+  d-db:
+    image: postgres:17
+    container_name: d-postgres17
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - dev-net
+
+networks:
+  dev-net:
+    external: true

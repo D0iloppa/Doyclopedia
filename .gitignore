@@ -1,0 +1,39 @@
+# 환경 변수 파일
+.env
+.env.local
+.env.production
+.env.staging
+
+# 데이터베이스 데이터
+db_data/
+
+# Node.js
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.eslintcache
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Java/Spring
+backend/target/
+backend/*.jar
+backend/*.war
+backend/.gradle/
+backend/build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 로그 파일
+*.log
+logs/
