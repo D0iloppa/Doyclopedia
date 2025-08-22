@@ -1,3 +1,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/D0iloppa/Doyclopedia-frontend.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/D0iloppa/Doyclopedia-backend.git
