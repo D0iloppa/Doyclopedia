@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import store from './app/store';
+import { ThemeProvider } from './app/providers/ThemeProvider';
+import { MainLayout } from './shared/ui/layout/MainLayout';
+import { HomePage } from './pages/home/ui/HomePage';
+import { AboutPage } from './pages/about/ui/AboutPage';
+import { ProfilePage } from './pages/profile/ui/ProfilePage';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Provider store={store}>
+      <ThemeProvider>
+        <Router basename="/doyclopedia-dev">
+          <MainLayout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Routes>
+          </MainLayout>
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  );
 }
 
-export default App
+export default App;

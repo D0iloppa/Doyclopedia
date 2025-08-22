@@ -1,11 +1,11 @@
 services:
   d-dev-react:
-    image: node:22-alpine
+    image: node:22-slim
     container_name: d-dev-react
     working_dir: /app
     volumes:
       - ./frontend:/app
-    command: sh   # 수동 진입을 위한 shell만
+    command: bash
     tty: true
     stdin_open: true
     restart: unless-stopped
@@ -14,15 +14,13 @@ services:
     networks:
       - dev-net
 
-  d-tomcat:
-    image: tomcat:9.0-jdk8
-    container_name: d-tomcat
+  d-backend:
+    build: ./backend
+    container_name: d-backend
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-    volumes:
-      - ./backend:/usr/local/tomcat/webapps
     ports:
-      - "${TOMCAT_PORT:-8080}:8080"
+      - "${BACKEND_PORT:-8080}:8080"
     depends_on:
       - d-db
     networks:
