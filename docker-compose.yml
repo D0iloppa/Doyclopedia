@@ -12,7 +12,8 @@ services:
     ports:
       - "${REACT_PORT:-3000}:3000"
     networks:
-      - dev-net
+      - default
+      - edge   # §5 F-9: gw ingress 공용망 (dev-net 폐지)
 
   d-backend:
     build: ./backend
@@ -24,7 +25,7 @@ services:
     depends_on:
       - d-db
     networks:
-      - dev-net
+      - default
 
   d-db:
     image: postgres:17
@@ -40,11 +41,11 @@ services:
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     networks:
-      - dev-net
+      - default   # DB는 스택 내부망에만
 
 volumes:
   postgres_data:
 
 networks:
-  dev-net:
+  edge:
     external: true
